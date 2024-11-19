@@ -3,6 +3,21 @@
     <!-- Левая колонка: Форма -->
     <div class="w-1/2 p-6 bg-gray-100 border-r">
       <h1 class="text-2xl font-bold mb-4">Создание профиля</h1>
+
+       <div>
+    <div>
+      <div v-if="session.loggedIn">
+        <NuxtLink @click="logout" to="/">Logout</NuxtLink>
+        <a>Hey you are logged in!</a>
+        <p>Session: {{ session }}</p>
+      </div>
+      <div v-else>
+        <TelegramLoginWidget telegram-login="my_bot" @callback="testCallback" />
+      </div>
+    </div>
+  </div>
+
+
       <form @submit.prevent="saveData">
         <!-- Поле ввода для ФИО -->
         <div class="mb-4">
@@ -72,9 +87,15 @@
       </div>
     </div>
   </div>
+
+  
+
+
 </template>
 
 <script setup>
+
+
 import { reactive } from 'vue';
 
 const form = reactive({
@@ -82,6 +103,12 @@ const form = reactive({
   description: '',
   avatar: '',
 });
+
+const { clearSession, session } = useUserSession();
+const logout = () => clearSession();
+const testCallback = (user) => {
+  console.log("Custom callback function: ",user);
+};
 
 const saveData = async () => {
   try {

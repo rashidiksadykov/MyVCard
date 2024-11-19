@@ -13,6 +13,7 @@
     "@quasar/extras": "^1.16.13",
     "base62": "^2.0.2",
     "nuxt": "^3.14.159",
+    "nuxt-telegram-auth": "^1.2.0",
     "quasar": "^2.17.4",
     "uuid": "^11.0.3",
     "vue": "latest",

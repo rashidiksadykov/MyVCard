@@ -6,6 +6,10 @@ export default defineNuxtConfig({
   css: [
     '@/assets/css/tailwind.css', // Путь к вашему файлу Tailwind
   ],
+
+  
+
+
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -18,5 +22,6 @@ export default defineNuxtConfig({
       '/data/:shortId': { cors: true },
     },
   },
-  
+
+  modules: ['nuxt-telegram-auth'],
 })
