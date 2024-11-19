@@ -95,6 +95,23 @@
 
 <script setup>
 
+require('dotenv').config();
+
+const TELEGRAM_TOKEN = process.env.CLOUDFLARE_TOKEN;
+
+const { clearSession, session } = useUserSession();
+const logout = () => clearSession();
+const testCallback = (user) => {
+  console.log("Custom callback function: ",user);
+};
+
+
+data() {
+    return {
+      TELEGRAM_TOKEN: process.env.CLOUDFLARE_TOKEN,
+    };
+  },
+
 
 import { reactive } from 'vue';
 

@@ -23,5 +23,11 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-telegram-auth'],
+  modules: ['nuxt-telegram-auth',
+    '@nuxtjs/dotenv',
+
+
+  ],
+  
+
 })
