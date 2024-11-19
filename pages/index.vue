@@ -12,7 +12,7 @@
         <p>Session: {{ session }}</p>
       </div>
       <div v-else>
-        <TelegramLoginWidget telegram-login="my_bot" @callback="testCallback" />
+        <TelegramLoginWidget telegram-login="tokenrebate_bot" @callback="testCallback" />
       </div>
     </div>
   </div>
