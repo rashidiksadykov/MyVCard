@@ -28,9 +28,11 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, message: 'Нет данных для сохранения' });
     }
 
+    // Формируем путь и контент файла
     const filePath = `data/${body.filename}.json`;
     const content = Buffer.from(JSON.stringify(body)).toString('base64');
 
+    // Отправка запроса на GitHub API
     const response = await axios.put(
       `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/${filePath}`,
       {
@@ -45,6 +47,7 @@ export default defineEventHandler(async (event) => {
       }
     );
 
+    // Возвращаем ссылку на созданный файл
     return { success: true, link: response.data.content.html_url };
   } catch (error) {
     if (error.response) {
@@ -54,7 +57,7 @@ export default defineEventHandler(async (event) => {
       console.error('Ошибка запроса:', error.message);
     }
     throw createError({ statusCode: 500, message: error.message });
-  }
+
 
 
 
