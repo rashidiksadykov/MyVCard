@@ -3,11 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
 
-  css: [
-    '@/assets/css/tailwind.css', // Путь к вашему файлу Tailwind
+  css: [    '@/assets/css/tailwind.css' // Путь к вашему файлу Tailwind
   ],
 
-  
+  modules: ['nuxt-telegram-auth'  ],
 
 
   postcss: {
@@ -23,11 +22,14 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['nuxt-telegram-auth',
-    '@nuxtjs/dotenv',
+  
+  runtimeConfig: {
+    // Доступно только на сервере
+    TELEGRAM_TOKEN: process.env.TELEGRAM_TOKEN,
+    // Доступно на клиенте через useRuntimeConfig()
+    
+  },
 
-
-  ],
   
 
 })

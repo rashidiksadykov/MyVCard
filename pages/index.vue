@@ -4,19 +4,6 @@
     <div class="w-1/2 p-6 bg-gray-100 border-r">
       <h1 class="text-2xl font-bold mb-4">Создание профиля</h1>
 
-       <div>
-    <div>
-      <div v-if="session.loggedIn">
-        <NuxtLink @click="logout" to="/">Logout</NuxtLink>
-        <a>Hey you are logged in!</a>
-        <p>Session: {{ session }}</p>
-      </div>
-      <div v-else>
-        <TelegramLoginWidget telegram-login="tokenrebate_bot" @callback="testCallback" />
-      </div>
-    </div>
-  </div>
-
 
       <form @submit.prevent="saveData">
         <!-- Поле ввода для ФИО -->
@@ -57,16 +44,27 @@
           />
         </div>
 
-        <!-- Динамический список ссылок (соцсети и кастомные) -->
-        <!-- Здесь можно добавить поля для соцсетей и кастомных ссылок, как было описано ранее -->
-
-        <!-- Кнопка сохранения -->
+      <div>
+        <div>
+          <div v-if="session.loggedIn">
+            <NuxtLink @click="logout" to="/">Logout</NuxtLink>
+            <a>Hey you are logged in!</a>
+                    <!-- Кнопка сохранения -->
         <button
           type="submit"
           class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
           Сохранить данные
         </button>
+          </div>
+          <div v-else>
+            <TelegramLoginWidget telegram-login="tokenrebate_bot" @callback="testCallback" />
+          </div>
+        </div>
+      </div>
+
+
+
       </form>
     </div>
 
@@ -87,45 +85,25 @@
       </div>
     </div>
   </div>
-
-  
-
-
 </template>
 
 <script setup>
+import { reactive } from 'vue';
+//import { useUserSession } from '~/composables/useUserSession';
 
-require('dotenv').config();
-
-const TELEGRAM_TOKEN = process.env.CLOUDFLARE_TOKEN;
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
 const { clearSession, session } = useUserSession();
 const logout = () => clearSession();
 const testCallback = (user) => {
-  console.log("Custom callback function: ",user);
+  console.log("Custom callback function: ", user);
 };
-
-
-data() {
-    return {
-      TELEGRAM_TOKEN: process.env.CLOUDFLARE_TOKEN,
-    };
-  },
-
-
-import { reactive } from 'vue';
 
 const form = reactive({
   fio: '',
   description: '',
   avatar: '',
 });
-
-const { clearSession, session } = useUserSession();
-const logout = () => clearSession();
-const testCallback = (user) => {
-  console.log("Custom callback function: ",user);
-};
 
 const saveData = async () => {
   try {
