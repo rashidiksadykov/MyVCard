@@ -44,33 +44,18 @@
           />
         </div>
 
-      <div>
-        <div>
-          <div v-if="session.loggedIn">
-            <NuxtLink @click="logout" to="/">Logout</NuxtLink>
-            <a>Hey you are logged in!</a>
-                    <!-- Кнопка сохранения -->
-        <button
+            <button
           type="submit"
           class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
           Сохранить данные
         </button>
-          </div>
-          <div v-else>
-            <TelegramLoginWidget telegram-login="tokenrebate_bot" @callback="testCallback" />
-          </div>
-        </div>
-      </div>
-
-
-
       </form>
     </div>
 
     <!-- Правая колонка: Предпросмотр -->
     <div class="w-1/2 p-6 bg-white">
-      <h1 class="text-2xl font-bold mb-4">Предпросмотр</h1>
+      <h1 class="text-2xl font-bold mb-4">Предпросмотр </h1>
       <div class="border rounded-lg p-4">
         <!-- Аватар -->
         <div v-if="form.avatar" class="mb-4 flex justify-center">
@@ -89,15 +74,7 @@
 
 <script setup>
 import { reactive } from 'vue';
-//import { useUserSession } from '~/composables/useUserSession';
 
-const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
-
-const { clearSession, session } = useUserSession();
-const logout = () => clearSession();
-const testCallback = (user) => {
-  console.log("Custom callback function: ", user);
-};
 
 const form = reactive({
   fio: '',
