@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
     // Отправка запроса на GitHub API
     const response = await axios.put(
-      `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/${filePath}`,
+      `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/${filePath}`,
       {
         message: `Создание файла ${filePath}`,
         content, // Контент в формате base64
