@@ -20,31 +20,43 @@ export default defineEventHandler(async (event) => {
     const content = Buffer.from(JSON.stringify(body, null, 2)).toString('base64');
     const filePath = `data/${shortId}.json`;
 
-    try {
-      const response = await axios.put(
-        `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/contents/${filePath}`,
-        {
-          message: `Создание файла ${filePath}`,
-          content, // Контент в формате base64
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      console.log('Успешный ответ:', response.data); // Работает, так как response определён
-    } catch (error) {
-      if (error.response) {
-        console.error('Ошибка API:', error.response.data); // Работает, error.response доступен
-        console.error('Код статуса:', error.response.status);
-      } else {
-        console.error('Ошибка запроса:', error.message); // Здесь response не используется
-      }
+
+    
+    const body = await readBody(event);
+
+    if (!body) {
+      throw createError({ statusCode: 400, message: 'Нет данных для сохранения' });
     }
-    
-    
+
+    const filePath = `data/${body.filename}.json`;
+    const content = Buffer.from(JSON.stringify(body)).toString('base64');
+
+    const response = await axios.put(
+      `https://api.github.com/repos/${process.env.GITHUB_OWNER}/${process.env.GITHUB_REPO}/${filePath}`,
+      {
+        message: `Создание файла ${filePath}`,
+        content, // Контент в формате base64
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    return { success: true, link: response.data.content.html_url };
+  } catch (error) {
+    if (error.response) {
+      console.error('Ошибка API:', error.response.data);
+      console.error('Код статуса:', error.response.status);
+    } else {
+      console.error('Ошибка запроса:', error.message);
+    }
+    throw createError({ statusCode: 500, message: error.message });
+  }
+
+
 
     // Возвращаем ссылку на файл в репозитории
     const resultLink = response.data.content.html_url;
