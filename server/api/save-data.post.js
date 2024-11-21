@@ -34,15 +34,16 @@ export default defineEventHandler(async (event) => {
           },
         }
       );
-      console.log('Успешный ответ:', response.data);
+      console.log('Успешный ответ:', response.data); // Работает, так как response определён
     } catch (error) {
       if (error.response) {
-        console.error('Ошибка API:', error.response.data);
+        console.error('Ошибка API:', error.response.data); // Работает, error.response доступен
         console.error('Код статуса:', error.response.status);
       } else {
-        console.error('Ошибка запроса:', error.message);
+        console.error('Ошибка запроса:', error.message); // Здесь response не используется
       }
     }
+    
     
 
     // Возвращаем ссылку на файл в репозитории
