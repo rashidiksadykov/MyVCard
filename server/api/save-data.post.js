@@ -3,13 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import base62 from 'base62/lib/ascii';
 
 export default defineEventHandler(async (event) => {
-  try {
-    // Чтение тела запроса
-    const body = await readBody(event);
-
-    if (!body) {
-      throw createError({ statusCode: 400, message: 'Нет данных для сохранения' });
-    }
+  
+    
 
     // Генерация ID
     const uuid = uuidv4();
@@ -21,7 +16,8 @@ export default defineEventHandler(async (event) => {
     const filePath = `data/${shortId}.json`;
 
 
-    
+    try {
+        
     const body = await readBody(event);
 
     if (!body) {
