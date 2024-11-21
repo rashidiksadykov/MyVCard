@@ -11,6 +11,8 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, message: 'Нет данных для сохранения' });
     }
 
+
+   
     // Генерация ID
     const uuid = uuidv4();
     const buffer = Buffer.from(uuid.replace(/-/g, ''), 'hex');
@@ -35,9 +37,13 @@ export default defineEventHandler(async (event) => {
       }
     );
 
+    console.log('Token is valid:', response.data);
+
     // Возвращаем ссылку на созданный файл
     return { success: true, link: response.data.content.html_url };
   } catch (error) {
+
+    console.error('Error validating token:', error.response?.data || error.message);
     // Логирование ошибки
     console.error('Ошибка API:', error.response?.data || error.message);
     throw createError({
